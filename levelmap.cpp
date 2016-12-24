@@ -1,8 +1,13 @@
-#include "levelmap.h"
+//
+// Level Map
+//
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+#include "levelmap.h"
+#include "util.h"
 
 LevelMap::LevelMap()
 {
@@ -36,12 +41,6 @@ void LevelMap::dump()
 		}
 }
 
-int alea(int min,int max)
-{
-//	return (new Random()).Next(min,max);
-	return min+rand()%(max - min +1);
-}
-
 void LevelMap::addSalle()
 {
 	Salle *salle=new Salle();
@@ -52,15 +51,18 @@ void LevelMap::addSalle()
 		{
 		x=alea(2,LEVEL_MAX_WIDTH-SALLE_MAX_WIDTH-2);
 		y=alea(2,LEVEL_MAX_HEIGHT-SALLE_MAX_HEIGHT-2);
-		w=alea(2,SALLE_MAX_WIDTH);
-		h=alea(2,SALLE_MAX_HEIGHT);
-		printf("%d %d\n",w,h);
+		w=alea(SALLE_MIN_WIDTH,SALLE_MAX_WIDTH);
+		h=alea(SALLE_MIN_HEIGHT,SALLE_MAX_HEIGHT);
+		printf("\n%d %d (%d %d) ",x,y,w,h);
 		salle->setPosition(x,y,w,h);
 		ok=true;
 
 		for (int i=0;ok && i<_nbSalles;i++)
 			if (salle->deborde(_salles.at(i)))
+				{
+				printf("nok -> %d ",i);
 				ok=false;
+				}
 
 		if (ok)
 			{
@@ -71,10 +73,12 @@ void LevelMap::addSalle()
 				_terrain[i][y]=_terrain[i][y+h+1]='#';
 			for(int i=y; i<y+h+2; i++)
 				_terrain[x][i]=_terrain[x+w+1][i]='#';
-			// terrain indéfini1
+			// terrain accessible
 			for(int i=x+1; i<x+w+1; i++)
 				for(int j=y+1; j<y+h+1; j++)
 					_terrain[i][j]='.';
+			// no de la salle
+			_terrain[x+1][y+1]='0'-1+_nbSalles;
 			}
 		}
 }

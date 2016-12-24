@@ -1,3 +1,7 @@
+//
+// Salle
+//
+
 #ifndef __salle_h__
 #define __salle_h__
 
@@ -9,7 +13,9 @@ using namespace std;
 
 typedef pair<int,int> Coord;
 
+#define SALLE_MIN_WIDTH 2
 #define SALLE_MAX_WIDTH 8
+#define SALLE_MIN_HEIGHT 2
 #define SALLE_MAX_HEIGHT 8
 
 class Salle
