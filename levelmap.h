@@ -23,9 +23,12 @@ public :
 
 	void initialize();
 
-	void addSalle();
+	void createSalle();
 
 	void dump();
+
+private :
+	void addSalle(Salle *);
 
 private :
 	vector<Salle> _salles;

@@ -41,7 +41,7 @@ void LevelMap::dump()
 		}
 }
 
-void LevelMap::addSalle()
+void LevelMap::createSalle()
 {
 	Salle *salle=new Salle();
 	bool ok=false;
@@ -66,20 +66,34 @@ void LevelMap::addSalle()
 
 		if (ok)
 			{
-			_salles.push_back(*salle);
-			_nbSalles++;
-				// murs sur le pourtour
-			for(int i=x; i<x+w+2; i++)
-				_terrain[i][y]=_terrain[i][y+h+1]='#';
-			for(int i=y; i<y+h+2; i++)
-				_terrain[x][i]=_terrain[x+w+1][i]='#';
-			// terrain accessible
-			for(int i=x+1; i<x+w+1; i++)
-				for(int j=y+1; j<y+h+1; j++)
-					_terrain[i][j]='.';
-			// no de la salle
-			_terrain[x+1][y+1]='0'-1+_nbSalles;
+			salle->createPorte();
+			addSalle(salle);
 			}
 		}
+}
+
+void LevelMap::addSalle(Salle *salle)
+{
+	_salles.push_back(*salle);
+	_nbSalles++;
+
+	int x=salle->getX();
+	int y=salle->getY();
+	int w=salle->getW();
+	int h=salle->getH();
+		// murs sur le pourtour
+	for(int i=x; i<x+w+2; i++)
+		_terrain[i][y]=_terrain[i][y+h+1]='#';
+	for(int i=y; i<y+h+2; i++)
+		_terrain[x][i]=_terrain[x+w+1][i]='#';
+	// terrain accessible
+	for(int i=x+1; i<x+w+1; i++)
+		for(int j=y+1; j<y+h+1; j++)
+			_terrain[i][j]='.';
+	// porte
+	Coord porte=salle->getPorte();
+	_terrain[porte.first][porte.second]='@';
+	// no de la salle
+	_terrain[x+1][y+1]='0'-1+_nbSalles;
 }
 

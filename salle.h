@@ -7,11 +7,9 @@
 
 #include <vector>
 #include <stdbool.h>
+#include "util.h"
 
 using namespace std;
-
-
-typedef pair<int,int> Coord;
 
 #define SALLE_MIN_WIDTH 2
 #define SALLE_MAX_WIDTH 8
@@ -31,6 +29,9 @@ public :
 	int getH();
 
 	bool deborde(Salle salle);
+
+	void createPorte();
+	Coord getPorte();
 
 private:
 	int _x;

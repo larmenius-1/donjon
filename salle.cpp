@@ -2,6 +2,8 @@
 // Salle
 //
 
+// les murs ne sont pas inclus dans la dimension
+
 #include "salle.h"
 
 Salle::Salle()
@@ -48,3 +50,39 @@ bool Salle::deborde(Salle salle)
 		return false;
 	return true;
 }
+
+void Salle::createPorte()
+{
+	int mur=alea(1,4);	// NESO
+	Coord *porte=new Coord();
+	switch(mur) 
+		{
+		case 1 :	// mur nord
+			porte->first=alea(_x+1,_x+_w);
+			porte->second=_y;
+			break ;
+		case 2 :	// mur est
+			porte->first=_x+_w+1;
+			porte->second=alea(_y+1,_y+_h);
+			break ;
+		case 3 :	// mur sud
+			porte->first=alea(_x+1,_x+_w);
+			porte->second=_y+_h+1;
+			break ;
+		case 4 :	// mur ouest
+			porte->first=_x;
+			porte->second=alea(_y+1,_y+_h);
+			break ;
+		}
+			
+	_portes.push_back(*porte);
+}
+
+Coord Salle::getPorte()
+{
+	// if (!_portes.empty())
+		return _portes.at(0);
+	// return NULL;	// defaut qui plante
+}
+
+

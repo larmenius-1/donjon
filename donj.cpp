@@ -19,7 +19,7 @@ int main()
 
 	int nbSalles=alea(MIN_SALLE_BY_LEVEL,MAX_SALLE_BY_LEVEL);
 	for (int i=0; i<nbSalles; i++)
-		level.addSalle();
+		level.createSalle();
 
 	level.dump();
 }
