@@ -5,7 +5,7 @@ EXEC=donjon
 
 all: $(EXEC)
 
-donjon: donj.o salle.o levelmap.o
+donjon: donj.o salle.o levelmap.o util.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
